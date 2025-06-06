@@ -2,7 +2,9 @@
 
 It is a text based game, you can play it at old broswer.
 
-It will use minimum python and html and css technology.
+It will use minimum python3.2 and html and css technology.
+
+> It uses python3.2 so that you can't use pip. And also python3.2 static compiled version is just as small as 5.7MB.
 
 ## User System
 
