@@ -1,5 +1,3 @@
-"""
-"""
 import random
 import os
 import json
@@ -34,9 +32,10 @@ class Event_Function_Class():
             [{"level": 2}, self.level_2_gambling],
             [{"level": 2}, self.luck_day],
         ]
-        user_states[self.username] = {
-            "level": 0
-        }
+        if username not in user_states:
+            user_states[self.username] = {
+                "level": 0
+            }
 
     def _print_debug_information(self):
         print(user_states[self.username])
@@ -55,6 +54,7 @@ class Event_Function_Class():
             user_states = json.loads(json_text)
         except Exception as e:
             print(e)
+        self.__init__(self.username)
 
     def _set_user_level(self, level):
         user_states[self.username]["level"] = level
@@ -75,6 +75,7 @@ class Event_Function_Class():
         #    self._set_user_level(1)
         #    return "Great, now you got a name.", "redirect", "Let's go to level 1.", self.say_hi
         #return "You should input something valid.", "redirect", "Let me do it!", self.ask_for_account_register
+        self._set_user_level(self._get_user_level() + 1)
         return "Oh fuck, I forgot you told me your name before, sorry.", "redirect", "Now let's go to level 1.", self.say_hi
 
     def say_hi(self):
@@ -84,8 +85,8 @@ class Event_Function_Class():
         if "Say hi to her" in response:
             return "Hi! "+self.username+"!", "redirect", "What is the next?", self.level_up_for_free
         elif "Refuse to say anything" in response:
-            return "Well, you keep silence, so I keep silence.", "redirect", "Let's go back to hi", self.say_hi
-        return "Well, you keep silence, I keep silence.", "redirect", "Let's go back to hi", self.say_hi
+            return "Well, if you keep silence, girl keep silence.", "redirect", "Let's go back to hi", self.say_hi
+        return "Well, if you keep silence, girl keep silence.", "redirect", "Let's go back to hi", self.say_hi
     def luck_day(self):
         result = random.choice([1,2,3])
         if result == 1:
@@ -123,7 +124,7 @@ def game_loop(username):
     event_function_class = Event_Function_Class(username=username)
     event_function_class._load_json_data()
     while True:
-        user_level = user_states[username]["level"]
+        user_level = event_function_class._get_user_level()
         available_event_functions = []
         for event in event_function_class.event_functions:
             # could be <=
@@ -133,7 +134,9 @@ def game_loop(username):
         if len(available_event_functions) > 0:
             target_function = random.choice(available_event_functions)
         else:
+            os.system("clear")
             print("You just reached highest level. Goodbye! May god bless you!")
+            exit()
 
         direct_reply, interact_method, arguments, next_function = target_function()
         while True:
