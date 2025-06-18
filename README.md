@@ -33,3 +33,5 @@ Currently it should only support English and Chinese.
 ## Future Development
 
 How about use AI text generation tech to create infinate text based sex or porn world?
+
+Or simper, for each level, first you see a girl picture, then after you did some choice to get close to her, you get a sex picture. After you reach 100 level, the system will recommend you a porn website as a gift, how about pornhub?
